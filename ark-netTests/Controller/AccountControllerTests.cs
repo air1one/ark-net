@@ -91,6 +91,28 @@ namespace ArkNet.Controller.Tests
         }
 
         [TestMethod()]
+        public void VoteDelegateTest()
+        {
+            var dele = ArkNetApi.DelegateService.GetByUsername(_delegateName);
+            
+            var accCtnrl = new AccountController(ArkNetApi, _passPhrase);
+            var result = accCtnrl.VoteDelegate(dele.Delegate.PublicKey);
+
+            Assert.IsTrue(result.Success || (result.Success == false && result.TransactionIds == null && result.Error == "Failed to add vote, account has already voted for this delegate"));
+        }
+
+        [TestMethod()]
+        public void UnvoteDelegateTest()
+        {
+            var dele = ArkNetApi.DelegateService.GetByUsername(_delegateName);
+
+            var accCtnrl = new AccountController(ArkNetApi, _passPhrase);
+            var result = accCtnrl.UnvoteDelegate(dele.Delegate.PublicKey);
+
+            Assert.IsTrue(result.Success || (result.Success == false && result.TransactionIds == null && result.Error == "Failed to remove vote, account has not voted for this delegate"));
+        }
+
+        [TestMethod()]
         public void GetTransactionsTest()
         {
             var accCtnrl = new AccountController(ArkNetApi, _passPhrase);

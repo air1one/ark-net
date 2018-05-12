@@ -224,6 +224,82 @@ namespace ArkNet.Controller
         }
 
         /// <summary>
+        /// Vote a delegate.
+        /// </summary>
+        /// <param name="delegatePubKey">
+        /// Delegate public key.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ArkTransactionPostResponse"/> of the voting transaction.
+        /// </returns>
+        public ArkTransactionPostResponse VoteDelegate(string delegatePubKey)
+        {
+            List<string> votes = new List<string>();
+            votes.Add("+" + delegatePubKey);
+
+            var tx = _arkNetApi.TransactionApi.CreateVote(votes, _passPhrase, _secondPassPhrase);
+
+            return _arkNetApi.TransactionService.PostTransaction(tx);
+        }
+
+        /// <summary>
+        /// Vote a delegate asynchroneously.
+        /// </summary>
+        /// <param name="delegatePubKey">
+        /// Delegate public key.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ArkTransactionPostResponse"/> of the voting transaction.
+        /// </returns>
+        public async Task<ArkTransactionPostResponse> VoteDelegateAsync(string delegatePubKey)
+        {
+            List<string> votes = new List<string>();
+            votes.Add("+" + delegatePubKey);
+
+            var tx = _arkNetApi.TransactionApi.CreateVote(votes, _passPhrase, _secondPassPhrase);
+
+            return await _arkNetApi.TransactionService.PostTransactionAsync(tx).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Unvote a delegate.
+        /// </summary>
+        /// <param name="delegatePubKey">
+        /// Delegate public key.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ArkTransactionPostResponse"/> of the voting transaction.
+        /// </returns>
+        public ArkTransactionPostResponse UnvoteDelegate(string delegatePubKey)
+        {
+            List<string> votes = new List<string>();
+            votes.Add("-" + delegatePubKey);
+
+            var tx = _arkNetApi.TransactionApi.CreateVote(votes, _passPhrase, _secondPassPhrase);
+
+            return _arkNetApi.TransactionService.PostTransaction(tx);
+        }
+
+        /// <summary>
+        /// Unvote a delegate asynchroneously.
+        /// </summary>
+        /// <param name="delegatePubKey">
+        /// Delegate public key.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ArkTransactionPostResponse"/> of the voting transaction.
+        /// </returns>
+        public async Task<ArkTransactionPostResponse> UnvoteDelegateAsync(string delegatePubKey)
+        {
+            List<string> votes = new List<string>();
+            votes.Add("-" + delegatePubKey);
+
+            var tx = _arkNetApi.TransactionApi.CreateVote(votes, _passPhrase, _secondPassPhrase);
+
+            return await _arkNetApi.TransactionService.PostTransactionAsync(tx).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Vote for a delegate.
         /// </summary>
         /// <param name="votes">
